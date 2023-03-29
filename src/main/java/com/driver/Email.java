@@ -25,33 +25,45 @@ public class Email {
         // 3. It contains at least one lowercase letter
         // 4. It contains at least one digit
         // 5. It contains at least one special character. Any character apart from alphabets and digits is a special character
-        if(oldPassword.equals(this.password)){
-            if(newPassword.length()>=8 && isValid(newPassword)){
-                this.password = newPassword;
+        if(!oldPassword.equals(newPassword)) return;
+        boolean c1 = newPassword.length() >= 8 ? true : false;
+        boolean c2 = hasUpperCase(newPassword);
+        boolean c3 = hasLowerCase(newPassword);
+        boolean c4 = hasDigit(newPassword);
+        boolean c5 = hasSpecialChar(newPassword);
+        if(c1&& c2&& c3 && c4 && c5){
+            this.password = newPassword;
+        }
+    }
+    public boolean hasUpperCase(String pwd){
+        for(char ch : pwd.toCharArray()){
+            if(ch >= 'A' && ch <= 'Z') {
+                return true;
             }
         }
+        return  false;
     }
-    private boolean isValid(String newPassword){
-        boolean upperCase = false;
-        boolean lowerCase = false;
-        boolean digit = false;
-        boolean specialCharacter = false;
-
-        for(int i=0; i<newPassword.length(); i++){
-            char ch = newPassword.charAt(i);
-
-            if(Character.isUpperCase(ch))
-                upperCase = true;
-            if(Character.isLowerCase(ch))
-                lowerCase = true;
-            if(Character.isDigit(ch))
-                digit=true;
-            if(!Character.isDigit(ch) && !Character.isLetter(ch) && !Character.isWhitespace(ch))
-                specialCharacter = true;
-
+    public boolean hasLowerCase(String pwd){
+        for(char ch : pwd.toCharArray()){
+            if(ch >= 'a' && ch <= 'z') {
+                return true;
+            }
         }
-        if(upperCase==true && lowerCase==true && digit==true && specialCharacter==true)
-            return true;
-        return false;
+        return  false;
     }
+    public boolean hasDigit(String pwd){
+        for(char ch : pwd.toCharArray()){
+            if(Character.isDigit(ch)) return true;
+        }
+        return  false;
+    }
+    public boolean hasSpecialChar(String pwd){
+        for(char ch : pwd.toCharArray()){
+            if(!Character.isLetterOrDigit(ch)) {
+                return true;
+            }
+        }
+        return  false;
+    }
+
 }
